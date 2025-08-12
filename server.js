@@ -3,12 +3,7 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import { Server } from "socket.io";
-import {
-  uniqueNamesGenerator,
-  adjectives,
-  colors,
-  animals,
-} from "unique-names-generator";
+import { uniqueNamesGenerator, adjectives, colors, animals, } from "unique-names-generator";
 import dotenv from "dotenv";
 
 dotenv.config();
