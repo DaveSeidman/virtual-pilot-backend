@@ -7,7 +7,7 @@
     "start": "node server.js",
     "dev:tunnel": "lt -p 8000 -s virtual-pilot",
     "dev:server": "nodemon server.js --watch server.js",
-    "dev": "npm run dev:server & npm run dev:tunnel"
+    "dev": "npm run dev:tunnel & npm run dev:server"
   },
   "author": "",
   "license": "ISC",
