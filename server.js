@@ -21,7 +21,7 @@ app.get("/", (_req, res) => res.send("OK"));
 
 const server = http.createServer(app);
 const io = new Server(server, {
-  cors: { origin: true, credentials: true },
+  cors: { origin: ['https://your-gh-pages-domain'], credentials: false },
 });
 
 const rooms = new Map(); // slug -> { hostId: string, players: Set<string> }
