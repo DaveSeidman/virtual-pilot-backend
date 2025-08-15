@@ -3,8 +3,30 @@ import express from "express";
 import http from "http";
 import cors from "cors";
 import { Server } from "socket.io";
-import { uniqueNamesGenerator, adjectives, colors, animals, } from "unique-names-generator";
+import { uniqueNamesGenerator, adjectives, colors, animals } from "unique-names-generator";
 import dotenv from "dotenv";
+import os from "os";
+
+function getLocalIpAddress() {
+  const interfaces = os.networkInterfaces();
+  for (const interfaceName in interfaces) {
+    const addresses = interfaces[interfaceName];
+    for (const addressInfo of addresses) {
+      // Filter for IPv4 addresses that are not internal (loopback)
+      if (addressInfo.family === 'IPv4' && !addressInfo.internal) {
+        return addressInfo.address;
+      }
+    }
+  }
+  return null; // No suitable IP address found
+}
+
+const localIp = getLocalIpAddress();
+if (localIp) {
+  console.log(`Local IP Address: ${localIp}`);
+} else {
+  console.log('Could not determine local IP address.');
+}
 
 dotenv.config();
 
@@ -46,7 +68,7 @@ io.on("connection", (socket) => {
       socket.join(slug);
 
       ack?.({ ok: true, room: slug });
-      io.to(slug).emit("system:host-joined", { room: slug });
+      io.to(slug).emit("system:host-joined", { room: slug, localIp });
       console.log(`[host] ${socket.id} created room ${slug}`);
       return;
     }
